@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".common.Login">
+
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textColor="@color/primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar6"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/primary"
+            android:max="100"
+            android:progress="0"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/edittext15"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/progressBar6"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edit_text"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/primary" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField3"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/edittext15"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="25dp"
+            android:textColorHint="@color/primary"
+            app:hintEnabled="false"
+            app:passwordToggleContentDescription="Toggle password"
+            app:passwordToggleEnabled="true">
+
+
+            <EditText
+                android:id="@+id/edittext16"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edit_text"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:paddingVertical="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button8"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textview9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/forgot_password"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
+                android:textStyle="italic|bold" />
+
+            <TextView
+                android:id="@+id/textview10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/register"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
+                android:textStyle="italic|bold" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/textField3"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:textColor="@color/button_text"
+            app:backgroundTint="@null" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

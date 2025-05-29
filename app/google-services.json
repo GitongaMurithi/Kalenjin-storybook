@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "595571044572",
+    "project_id": "shopping-hub-b4030",
+    "storage_bucket": "shopping-hub-b4030.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595571044572:android:5a06026b1bd23a1af04419",
+        "android_client_info": {
+          "package_name": "com.example.test789"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHzCLxxsl9i3YmJ7xOioh33g3kihvsqoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
