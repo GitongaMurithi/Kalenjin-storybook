@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/read_books"
-            android:textColor="@color/button_text"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_gravity="center"
             android:textStyle="bold"/>
@@ -28,6 +28,7 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="30dp"
+            app:tint="@color/black"
             android:id="@+id/back"
             android:layout_gravity="start|center"
             android:contentDescription="@string/arrow_back"

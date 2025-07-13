@@ -194,7 +194,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/button"
                 android:text="@string/register"
-                android:textColor="@color/button_text" />
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:id="@+id/linear"
@@ -222,7 +222,7 @@
                     android:background="@drawable/button"
                     android:text="@string/login"
                     android:textAllCaps="false"
-                    android:textColor="@color/button_text"
+                    android:textColor="@color/black"
                     app:backgroundTint="@null" />
 
             </LinearLayout>

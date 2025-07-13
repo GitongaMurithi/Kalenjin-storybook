@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/edit"
-            android:textColor="@color/button_text"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_gravity="center"
             android:textStyle="bold"/>
@@ -241,7 +241,7 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/button"
                 android:text="@string/select_file_pdf"
-                android:textColor="@color/button_text"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/thumbnail_holder" />
 
@@ -253,7 +253,7 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button"
                 android:text="@string/upload"
-                android:textColor="@color/button_text"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/select" />

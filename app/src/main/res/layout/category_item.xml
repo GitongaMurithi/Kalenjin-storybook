@@ -14,6 +14,6 @@
         android:id="@+id/categoryName"
         tools:text = "General"
         android:layout_gravity="center"
-        android:textColor="@color/button_text"
+        android:textColor="@color/black"
         android:textSize="16sp"/>
 </androidx.cardview.widget.CardView>

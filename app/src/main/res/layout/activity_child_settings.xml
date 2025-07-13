@@ -62,7 +62,7 @@
         android:background="@drawable/button"
         android:text="@string/update"
         android:layout_marginTop="25dp"
-        android:textColor="@color/button_text"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/child_age" />
