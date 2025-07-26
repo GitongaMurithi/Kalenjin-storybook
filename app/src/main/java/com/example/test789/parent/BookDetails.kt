@@ -2,7 +2,6 @@ package com.example.test789.parent
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test789.adapters.ReviewsAdapter
 import com.example.test789.databinding.ActivityBookDetailsBinding
 import com.example.test789.models.AttemptedBooks
+import com.example.test789.models.Book
 import com.example.test789.models.Review
 import com.example.test789.models.Story
 import com.google.firebase.auth.FirebaseAuth
@@ -125,24 +125,18 @@ class BookDetails : AppCompatActivity() {
 
                             }
                             )
-                    } else {
-                        Toast.makeText(
-                            this@BookDetails,
-                            "You have already read the story",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
 
-                    val attemptedBook = AttemptedBooks(
+                    val book = Book(
                         id = id,
                         title = title
                     )
 
-                    if (attemptedBook.id.isNotBlank() && attemptedBook.title.isNotBlank()) {
+                    if (book.id.isNotBlank() && book.title.isNotBlank()) {
                         FirebaseDatabase.getInstance().getReference("Children/$userId")
                             .child(childId).child("attemptedBooks/$id")
                             .setValue(
-                                attemptedBook
+                                book
                             )
 //                            .addOnSuccessListener {
 //                                FirebaseDatabase.getInstance().getReference("Children/$userId")

@@ -5,8 +5,8 @@ import java.io.Serializable
 data class Child(
     val name : String = "",
     val age : Int = 0,
-    var attemptedBooks : AttemptedBooks = AttemptedBooks(),
-    var completedBooks : CompletedBooks = CompletedBooks(),
+    val attemptedBooks: Map<String, Book> = emptyMap(),
+    val completedBooks: Map<String, Book> = emptyMap(),
     val image : String = "",
     val id : String = ""
 ) : Serializable

@@ -27,9 +27,9 @@
     <string name="dislike_the_story">Dislike the story</string>
     <string name="dislike_reason">Please give your reason of disliking the story. This will help us do better content for you!</string>
     <string name="submit">Submit</string>
-    <string name="total_accessible_books">Total accessible books</string>
-    <string name="attempted">Attempted</string>
-    <string name="completed">Completed</string>
+    <string name="total_accessible_books">Currently accessible books</string>
+    <string name="attempted">Attempted history</string>
+    <string name="completed">Completed history</string>
     <string name="info">info</string>
     <string name="feedback">Would you like to share some feedback?</string>
     <string name="attempted_books">Attempted books</string>
@@ -60,4 +60,7 @@
     <string name="my_stories">My stories</string>
     <string name="who_is_reading">Who is reading</string>
     <string name="edit">Edit story</string>
+    <string name="_0">0</string>
+    <string name="preferred_age_and_below">Preferred age (and below)</string>
+    <string name="_13">13</string>
 </resources>

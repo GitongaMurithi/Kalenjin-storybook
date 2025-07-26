@@ -21,8 +21,8 @@ class ViewStories : AppCompatActivity() {
 
     private lateinit var binding: ActivityViewStoriesBinding
 
-    private lateinit var stories: ArrayList<Story>
-    private lateinit var filteredStories: ArrayList<Story>
+    private val allStories = mutableListOf<Story>()
+    private val filteredStories = mutableListOf<Story>()
     private lateinit var onStoryClicked: ParentHomeAdapter.OnStoryClicked
     private lateinit var onCategoryClick: CategoryAdapter.OnCategoryClick
 
@@ -30,9 +30,6 @@ class ViewStories : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityViewStoriesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        stories = ArrayList()
-        filteredStories = ArrayList()
 
         val childId = intent.getStringExtra("childId").toString()
         val parentId = intent.getStringExtra("parentId").toString()
@@ -109,31 +106,17 @@ class ViewStories : AppCompatActivity() {
                     FirebaseDatabase.getInstance().getReference("Stories")
                         .addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
-                                stories.clear()
+                                allStories.clear()
+                                filteredStories.clear()
                                 snapshot.children.forEach { dataSnapshot ->
                                     if (dataSnapshot.getValue(Story::class.java)!!.age <= age.toString()
                                             .toInt()
                                     ) {
-                                        stories.add(dataSnapshot!!.getValue(Story::class.java)!!)
+                                        allStories.add(dataSnapshot!!.getValue(Story::class.java)!!)
                                     }
                                 }
-
-
-                                filteredStories.addAll(stories)
-
-                                if (filteredStories.isNotEmpty()) {
-                                    binding.loading.visibility = View.GONE
-                                    binding.productsView.visibility = View.VISIBLE
-                                } else {
-                                    binding.loading.visibility = View.GONE
-                                    binding.productsView.visibility = View.GONE
-                                    binding.empty.visibility = View.VISIBLE
-                                }
-                                binding.productsView.adapter = ParentHomeAdapter(
-                                    context = this@ViewStories,
-                                    onStoryClicked = onStoryClicked,
-                                    stories = filteredStories
-                                )
+                                filteredStories.addAll(allStories)
+                                updateUI()
                             }
 
                             override fun onCancelled(error: DatabaseError) {
@@ -150,17 +133,29 @@ class ViewStories : AppCompatActivity() {
             })
     }
 
+    private fun updateUI() {
+        binding.loading.visibility = View.GONE
+        binding.productsView.visibility = if (filteredStories.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.empty.visibility = if (filteredStories.isEmpty()) View.VISIBLE else View.GONE
+
+        binding.productsView.adapter = ParentHomeAdapter(
+            context = this,
+            onStoryClicked = onStoryClicked,
+            stories = filteredStories
+        )
+    }
+
     private fun searchProducts(newText: String) {
         filteredStories.clear()
         if (newText.isEmpty()) {
-            filteredStories.addAll(stories)
+            filteredStories.addAll(allStories)
             binding.productsView.adapter = ParentHomeAdapter(
                 context = this,
                 stories = filteredStories,
                 onStoryClicked = onStoryClicked
             )
         } else {
-            val filteredList = stories.filter { story ->
+            val filteredList = allStories.filter { story ->
                 story.author.contains(newText, ignoreCase = true) ||
                         story.title.contains(newText, ignoreCase = true)
             }
@@ -176,29 +171,18 @@ class ViewStories : AppCompatActivity() {
     private fun filterByCategory(selectedCategory: String) {
         filteredStories.clear()
         if (selectedCategory == "All") {
-            filteredStories.addAll(stories)
+            filteredStories.addAll(allStories)
             binding.productsView.adapter = ParentHomeAdapter(
                 context = this,
                 onStoryClicked = onStoryClicked,
                 stories = filteredStories
             )
         } else {
-            val selectedStories = stories.filter { it.category == selectedCategory }
-            filteredStories.addAll(selectedStories)
-            if (filteredStories.isNotEmpty()) {
-                binding.loading.visibility = View.GONE
-                binding.productsView.visibility = View.VISIBLE
-                binding.empty.visibility = View.GONE
-            } else {
-                binding.loading.visibility = View.GONE
-                binding.productsView.visibility = View.GONE
-                binding.empty.visibility = View.VISIBLE
-            }
-            binding.productsView.adapter = ParentHomeAdapter(
-                context = this,
-                onStoryClicked = onStoryClicked,
-                stories = filteredStories
+            filteredStories.addAll(
+                allStories.filter { it.category == selectedCategory }
             )
         }
+
+        updateUI()
     }
 }

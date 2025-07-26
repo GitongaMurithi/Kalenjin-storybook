@@ -3,10 +3,13 @@ package com.example.test789.parent
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.test789.R
 import com.example.test789.databinding.ActivityChildProgressBinding
+import com.example.test789.models.Book
 import com.example.test789.models.Child
 import com.example.test789.models.Story
 import com.google.firebase.auth.FirebaseAuth
@@ -30,17 +33,36 @@ class ChildProgress : AppCompatActivity() {
          val child = intent.getSerializableExtra("child") as? Child
 
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
+//        FirebaseDatabase.getInstance().getReference("Children/$userId")
+//            .child(child!!.id).child("attemptedBooks")
+//            .addValueEventListener(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    binding.attemptedV.text = snapshot.childrenCount.toString()
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//                    TODO("Not yet implemented")
+//                }
+//
+//            })
+
         FirebaseDatabase.getInstance().getReference("Children/$userId")
             .child(child!!.id).child("attemptedBooks")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    binding.attemptedV.text = snapshot.childrenCount.toString()
+                    var count = 0
+                    for (childSnapshot in snapshot.children) {
+                        val book = childSnapshot.getValue(Book::class.java)
+                        if (!book?.id.isNullOrBlank() && !book?.title.isNullOrBlank()) {
+                            count++
+                        }
+                    }
+                    binding.attemptedV.text = count.toString()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Log.e("Firebase", "Error: ${error.message}")
                 }
-
             })
 
         FirebaseDatabase.getInstance().getReference("Children/$userId")
@@ -60,14 +82,21 @@ class ChildProgress : AppCompatActivity() {
         FirebaseDatabase.getInstance().getReference("Stories")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEach { story ->
-                        if (story.getValue(Story::class.java)!!.age <= child.age) {
-                            stories += 1
-                            binding.totalV.text = stories.toString()
-                        } else {
-                            binding.totalV.text = stories.toString()
+                    if(snapshot.exists()) {
+                        snapshot.children.forEach { story ->
+                            if (story.getValue(Story::class.java)!!.age <= child.age) {
+                                stories += 1
+                            } else {
+                                binding.totalV.text = stories.toString()
+
+                            }
                         }
+                        binding.totalV.text = stories.toString()
+
+                    } else {
+                        binding.totalV.text = getString(R.string._0)
                     }
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -98,7 +127,7 @@ class ChildProgress : AppCompatActivity() {
     private fun showDialogue() {
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Info")
-            .setMessage("Accessible books depends on the age of the child. Consider updating age accordingly.")
+            .setMessage("Currently available books depends on the age of the child. Consider updating age accordingly. If a book is removed by the author it will remain int history of attempted / read books.")
             .setPositiveButton(
                 "Okay"
             ) { dialog, _ ->

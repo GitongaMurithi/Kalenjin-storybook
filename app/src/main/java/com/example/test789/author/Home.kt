@@ -6,11 +6,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -68,6 +70,8 @@ class Home : Fragment(), AdapterView.OnItemSelectedListener {
 
         reference = FirebaseDatabase.getInstance().reference
         storyId = reference.child("Stories").push().key!!
+
+        setInputFilter(binding!!.age, 1, 13)
 
         binding!!.spinner.onItemSelectedListener = this
         val adapter = ArrayAdapter(
@@ -148,6 +152,9 @@ class Home : Fragment(), AdapterView.OnItemSelectedListener {
     private fun uploadDetails() {
         binding!!.progress.visibility = View.VISIBLE
 
+        val ageInput = binding!!.age.text.toString().toIntOrNull() ?: 1
+        val age = if (ageInput > 13) 13 else ageInput
+
         FirebaseDatabase.getInstance().getReference("Stories/$storyId")
             .setValue(
                 Story(
@@ -156,7 +163,7 @@ class Home : Fragment(), AdapterView.OnItemSelectedListener {
                     author = author,
                     title = binding!!.title.text.toString(),
                     category = category,
-                    age = binding!!.age.text.toString().toIntOrNull() ?: 1,
+                    age = age,
                     pages = binding!!.pages.text.toString().toIntOrNull() ?: 1,
                     description = binding!!.description.text.toString()
                 )
@@ -303,5 +310,19 @@ class Home : Fragment(), AdapterView.OnItemSelectedListener {
         )
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    private fun setInputFilter(editText: EditText, min: Int, max: Int) {
+        val filter = InputFilter { source, _, _, dest, dstart, dend ->
+            try {
+                val newValue = (dest.substring(0, dstart) + source + dest.substring(dend))
+                if (newValue.isEmpty()) return@InputFilter null
+                val input = newValue.toInt()
+                if (input in min..max) null else ""
+            } catch (e: NumberFormatException) {
+                ""
+            }
+        }
+        editText.filters = arrayOf(filter)
     }
 }

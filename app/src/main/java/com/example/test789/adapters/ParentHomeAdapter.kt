@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class ParentHomeAdapter @Inject constructor(
     private val context: Context,
-    private var stories : ArrayList<Story>,
+    private var stories: MutableList<Story>,
     private val onStoryClicked: OnStoryClicked
 ): RecyclerView.Adapter<ParentHomeAdapter.ParentViewHolder>() {
 

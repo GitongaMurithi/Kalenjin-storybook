@@ -131,7 +131,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/review_background"
-                android:hint="Preferred age (and below)"
+                android:hint="@string/preferred_age_and_below"
                 android:inputType="number"
                 android:padding="16dp"
                 android:textColor="@color/black"
@@ -255,7 +255,7 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button"
                 android:text="@string/upload"
-                android:textColor="@color/button_text"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/select" />
